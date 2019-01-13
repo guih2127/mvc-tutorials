@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<h2>Welcome</h2>
+
+<ul>
+    @for (int i = 0; i < (int)ViewData["NumTimes"]; i++)
+    {
+        <li>@ViewData["Message"]</li>
+        <!-- Mais a frente no tutorial aprenderemos a utilizar
+            uma ViewModel para passar dados do controller para a view,
+            que consiste numa abordagem muito mais correta. -->
+    }
+</ul>
+
+<!-- Fizemos um loop utilizando C#, utilizandos 
+    valores de ViewData definidos no controller.-->

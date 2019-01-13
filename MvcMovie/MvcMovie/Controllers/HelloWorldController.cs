@@ -1,6 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Encodings.Web;
 
+// Controllers são responsáveis por fornecer os dados necessários para que uma view
+// renderize a resposta. Views não devem executar lógica de negócios nem interagir
+// diretamente com o banco de dados. Uma view deve funcionar apenas com os dados
+// fornecidos pelo controller.
+
+
 namespace MvcMovie.Controllers
 {
     public class HelloWorldController : Controller
@@ -8,17 +14,24 @@ namespace MvcMovie.Controllers
         // 
         // GET: /HelloWorld/
 
-        public string Index()
+        public IActionResult Index()
         {
-            return "This is my default action...";
+            return View(); // Metódos como esse do controller geralmente retornam uma View, 
+            // a partir do IACtionResult, e não uma string como feito anteriormente.
         }
 
         // 
         // GET: /HelloWorld/Welcome/ 
 
-        public string Welcome(string name, int ID = 1)
+        public IActionResult Welcome(string name, int numTimes = 1)
         {
-            return HtmlEncoder.Default.Encode($"Hello {name}, ID: {ID}");
+            ViewData["Message"] = "Hello " + name;
+            ViewData["NumTimes"] = numTimes;
+
+            // O objeto ViewData não tem nenhuma propriedade definida até que
+            // se insira algo nele. Ele contém os dados que serão passados para a view.
+
+            return View();
         }
 
         // Aqui, passamos parâmetros opcionais, sendo que Id será 1 por padrão,
