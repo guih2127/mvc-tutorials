@@ -1,9 +1,11 @@
 ﻿@model IEnumerable<MvcMovie.Models.Movie>
+<!-- Aqui no Index, colocamos no model o mesmo model que colocamos nas outras views,
+	porém utilizando IEnumerable, para que seja possível iterar sobre cada objeto dentro
+	da lista. -->
 
 @{
     ViewData["Title"] = "Index";
 }
-
 <!-- Todas as nossas views de Movies foram criadas a partir do scaffolding. -->
 
 <h1>Index</h1>
@@ -30,6 +32,9 @@
         </tr>
     </thead>
     <tbody>
+
+<!-- Ou seja, para cada objeto que tivermos dentro da model, exibiremos as informações
+	definitas abaixo no nosso html. -->
 @foreach (var item in Model) {
         <tr>
             <td>

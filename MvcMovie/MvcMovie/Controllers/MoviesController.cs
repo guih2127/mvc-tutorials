@@ -25,6 +25,8 @@ namespace MvcMovie.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Movie.ToListAsync());
+												// No caso da Index, passamos uma lista de Movies para a View,
+												// utilizando o metódo ToListAsync().
         }
 
         // GET: Movies/Details/5
@@ -43,6 +45,12 @@ namespace MvcMovie.Controllers
             }
 
             return View(movie);
+												// Nosso metódo Details recebe um Id, que normalmente é passado como dados de rota,
+												// por ex: /movies/details/1. O firstOrDefaultAsync recebe uma lista de elementos,
+												// no caso, a lista de movies, como argumento, e então obtém o primeiro elemento
+												// que seja compatível com a expressão definida. Ou seja, se o id do movie for igual
+												// ao id fornecido na requisição, esse objeto será armazenado na variável. Por fim,
+												// passamos essa variável como parâmetro para a view.
         }
 
         // GET: Movies/Create
