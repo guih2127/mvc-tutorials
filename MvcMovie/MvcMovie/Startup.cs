@@ -39,7 +39,7 @@ namespace MvcMovie
             services.AddDbContext<MvcMovieContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
             // Código adicionado automaticamente através do scaffolding, configurando o bd sql,
-            // utilizando o context também gerado por ele.
+            // utilizando o context também gerado por ele adicionando-o como dependência.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
