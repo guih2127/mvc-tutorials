@@ -53,6 +53,13 @@
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            <!-- 
+                Os links de edit, details e delete são gerados automaticamente
+                pelo anchor tag helper do mvc. Os tag helpers permitem que o código
+                do lado do servidor participe na criação e renderização do HTML nas páginas
+                razor. Ou seja, o anchor tag helper utiliza o metódo de ação do controller
+                e o id para gerar um href, que no html é: href="/Movies/Edit/4", por exemplo.
+            -->
             </td>
         </tr>
 }

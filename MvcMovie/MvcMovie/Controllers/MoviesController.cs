@@ -25,8 +25,8 @@ namespace MvcMovie.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Movie.ToListAsync());
-												// No caso da Index, passamos uma lista de Movies para a View,
-												// utilizando o metódo ToListAsync().
+			// No caso da Index, passamos uma lista de Movies para a View,
+			// utilizando o metódo ToListAsync().
         }
 
         // GET: Movies/Details/5
@@ -45,12 +45,12 @@ namespace MvcMovie.Controllers
             }
 
             return View(movie);
-												// Nosso metódo Details recebe um Id, que normalmente é passado como dados de rota,
-												// por ex: /movies/details/1. O firstOrDefaultAsync recebe uma lista de elementos,
-												// no caso, a lista de movies, como argumento, e então obtém o primeiro elemento
-												// que seja compatível com a expressão definida. Ou seja, se o id do movie for igual
-												// ao id fornecido na requisição, esse objeto será armazenado na variável. Por fim,
-												// passamos essa variável como parâmetro para a view.
+			// Nosso metódo Details recebe um Id, que normalmente é passado como dados de rota,
+			// por ex: /movies/details/1. O firstOrDefaultAsync recebe uma lista de elementos,
+			// no caso, a lista de movies, como argumento, e então obtém o primeiro elemento
+			// que seja compatível com a expressão definida. Ou seja, se o id do movie for igual
+			// ao id fornecido na requisição, esse objeto será armazenado na variável. Por fim,
+			// passamos essa variável como parâmetro para a view.
         }
 
         // GET: Movies/Create
@@ -74,6 +74,15 @@ namespace MvcMovie.Controllers
             }
             return View(movie);
         }
+        // Nosso metódo create (HttpPost), através do model binding, obtém o form postado e
+        // cria um novo objeto Movie, que é passado como o parâmetro Movie recebido pela ação,
+        // o ModelState.IsValid verifica se os dados submetidos podem ser utilizados para modificar
+        // um objeto movie realmente. O controller então adiciona os dados no context e salva as
+        // alterações, chamando SaveChangesAsync. Por último, o controller redireciona o usuário
+        // para o Index.
+
+        // É importante dizer também que antes do form ser postado no servidor, há também
+        // validações do lado do cliente, através de javascript, caso dele esteja habilitado.
 
         // GET: Movies/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -89,13 +98,21 @@ namespace MvcMovie.Controllers
                 return NotFound();
             }
             return View(movie);
+            // O metódo HttpGet Edit recebe o parâmetro do id, e utiliza do EF para
+            // encontrar o movie, utilizando o FindAsync, então esse movie é
+            // passado para a view.
         }
 
         // POST: Movies/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
+        // O HttpPost define que o esse metódo pode ser invocado apenas por requisições POST.
+        // O default é HttpGet, então não precisamos colocá-lo nos outros.
         [ValidateAntiForgeryToken]
+        // O Bind é um jeito de se proteger contra over-posting. No bind devem ser incluídos apenas
+        // dados que você quer que possam ser trocados.
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price")] Movie movie)
         {
             if (id != movie.Id)
