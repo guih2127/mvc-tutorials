@@ -22,11 +22,30 @@ namespace MvcMovie.Controllers
         }
 
         // GET: Movies
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Movie.ToListAsync());
+            var movies = from m in _context.Movie
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(s => s.Title.Contains(searchString));
+            }
+            // Agora, passamos como parâmetro para a função Index uma searchString,
+            // se ela existir (não for null ou empty), mudamos a variável movies
+            // utilizando o contains, a partir da searchString passada.
+            // O código acima faz uma consulta através de uma expressão LAMBDA. 
+            // Expressões lambda são executados em consultas, que utilizam operadores
+            // de consulta padrão, como o Where, OrderBy e Contains.
+            // A partir de agora, então se chamarmos uma url tal com o parametro ?searchString=Ghost
+            // conseguiremos obter os filmes que tenham apenas Ghost em seu Title.
+
+            return View(await movies.ToListAsync());
 			// No caso da Index, passamos uma lista de Movies para a View,
 			// utilizando o metódo ToListAsync().
+
+            // modificamos o que retornaremos na view. Não retornaremos mais _context.Movie
+            // e sim nossa variável movies.
         }
 
         // GET: Movies/Details/5
