@@ -1,7 +1,8 @@
-﻿@model IEnumerable<MvcMovie.Models.Movie>
+﻿@model MvcMovie.Models.MovieGenreViewModel
 <!-- Aqui no Index, colocamos no model o mesmo model que colocamos nas outras views,
-	porém utilizando IEnumerable, para que seja possível iterar sobre cada objeto dentro
-	da lista. -->
+    porém utilizando IEnumerable, para que seja possível iterar sobre cada objeto dentro
+    da lista. -->
+<!-- Atualizamos a Model para nossa nova ViewModel. -->
 
 @{
     ViewData["Title"] = "Index";
@@ -16,6 +17,10 @@
 
 <form asp-controller="Movies" asp-action="Index" method="get">
     <p>
+        <select asp-for="MovieGenre" asp-items="Model.Genres">
+            <option value="">All</option>
+        </select>
+
         Title: <input type="text" name="SearchString">
         <input type="submit" value="Filter" />
     </p>
@@ -28,56 +33,61 @@
     controller.
     Obs: Definimos o method como GET, para podermos capturar as informações de pesquisa.
 -->
+<!--
+    Atualizamos o Form, colocando um Select com os Genres da Model.
+-->
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.Movies[0].Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReleaseDate)
+                @Html.DisplayNameFor(model => model.Movies[0].ReleaseDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Genre)
+                @Html.DisplayNameFor(model => model.Movies[0].Genre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.Movies[0].Price)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-
-<!-- Ou seja, para cada objeto que tivermos dentro da model, exibiremos as informações
-	definitas abaixo no nosso html. -->
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            <!-- 
-                Os links de edit, details e delete são gerados automaticamente
-                pelo anchor tag helper do mvc. Os tag helpers permitem que o código
-                do lado do servidor participe na criação e renderização do HTML nas páginas
-                razor. Ou seja, o anchor tag helper utiliza o metódo de ação do controller
-                e o id para gerar um href, que no html é: href="/Movies/Edit/4", por exemplo.
-            -->
-            </td>
-        </tr>
-}
+        <!-- Modificamos o código dos títulos, já que mudamos a nossa model temos que obtê-los de
+            forma diferente. -->
+        <!-- Ou seja, para cada objeto que tivermos dentro da model, exibiremos as informações
+            definitas abaixo no nosso html. -->
+        @foreach (var item in Model.Movies)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <!--
+                        Os links de edit, details e delete são gerados automaticamente
+                        pelo anchor tag helper do mvc. Os tag helpers permitem que o código
+                        do lado do servidor participe na criação e renderização do HTML nas páginas
+                        razor. Ou seja, o anchor tag helper utiliza o metódo de ação do controller
+                        e o id para gerar um href, que no html é: href="/Movies/Edit/4", por exemplo.
+                    -->
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

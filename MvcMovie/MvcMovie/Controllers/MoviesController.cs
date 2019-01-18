@@ -22,8 +22,13 @@ namespace MvcMovie.Controllers
         }
 
         // GET: Movies
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString, string movieGenre)
         {
+            IQueryable<string> genreQuery = from m in _context.Movie
+                                            orderby m.Genre
+                                            select m.Genre;
+            // Criamos uma query que obtém todos os Genres do banco de dados.
+
             var movies = from m in _context.Movie
                          select m;
 
@@ -40,7 +45,21 @@ namespace MvcMovie.Controllers
             // A partir de agora, então se chamarmos uma url tal com o parametro ?searchString=Ghost
             // conseguiremos obter os filmes que tenham apenas Ghost em seu Title.
 
-            return View(await movies.ToListAsync());
+            if (!String.IsNullOrEmpty(movieGenre))
+            {
+                movies = movies.Where(s => s.Genre == movieGenre);
+            }
+            // Aqui, caso haja uma string movieGenre, obtemos apenas os movies onde
+            // o Genre seja igual a essa string.
+
+            var movieGenreVM = new MovieGenreViewModel
+            {
+                Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
+                Movies = await movies.ToListAsync()
+            };
+
+
+            return View(movieGenreVM);
 			// No caso da Index, passamos uma lista de Movies para a View,
 			// utilizando o metódo ToListAsync().
 
