@@ -22,5 +22,9 @@ namespace MvcMovie.Models
         // moeda no banco de dados.
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
+        public string Rating { get; set; }
+        
+        // Estamos também adicionanso uma nova propriedade Rating, iremos fazer
+        // a migration e ela será adicionada ao bando de dados.
     }
 }
