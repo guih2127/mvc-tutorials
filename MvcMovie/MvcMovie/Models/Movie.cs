@@ -11,7 +11,10 @@ namespace MvcMovie.Models
         [StringLength(60, MinimumLength = 3)]
         [Required]
         public string Title { get; set; }
-         
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        // O ApplyFormatInEditMode aplica a mesma formatação para os formulários.
+        // É importante utilizar o DisplayFormat em conjunto com o DataType.
         [Display(Name = "Release Date")] // Corrigindo o nome, que antes estava junto.
         [DataType(DataType.Date)] 
         // Utilizamos DataType.Date para que apenas a data seja necessária para inserção,
@@ -22,7 +25,7 @@ namespace MvcMovie.Models
         [Required]
         [StringLength(30)]
         public string Genre { get; set; }
-        // Utilizamos o DataTipe para especificar o tipo de dados, 
+        // Utilizamos o DataTipe para especificar a formatação dos dados, 
         // assim definimos que os valores serão decimais com casas 18 e 2.
         // A partir disso, o Entity Framework mapeia corretamente o Price para
         // moeda no banco de dados.
