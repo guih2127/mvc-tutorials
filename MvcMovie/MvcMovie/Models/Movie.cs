@@ -40,7 +40,7 @@ namespace MvcMovie.Models
         [Required]
         public string Rating { get; set; }
         
-        // Estamos também adicionanso uma nova propriedade Rating, iremos fazer
+        // Estamos também adicionando uma nova propriedade Rating, iremos fazer
         // a migration e ela será adicionada ao bando de dados.
 
         // Adicionamos também decorators de validação, como Required e StringLength,

@@ -216,3 +216,14 @@ namespace MvcMovie.Controllers
         }
     }
 }
+
+// Aqui acontece um caso curioso. Ambos os metódos Delete (GET) e o Delete (POST) recebem
+// um número inteiro como parâmetro. Isso não é permitido, pois o CLR exige que metódos
+// sobrecarregados tenham parâmetros exclusivos. Uma solução para isso é utilizar
+// nomes diferentes para os metódos, como o Scaffolding fez. Como o MVC mapeia os segmentos
+// de uma URL para os metódos de ação com nome igual, o roteamento não iria ocorrer normalmente,
+// e é isso que o ActionName("Delete") está corrigindo para nós. Ou seja, um POST na url /delete/
+// irá chamar o metódo DeleteConfirmed.
+
+// Poderiamos também incluir um parâmetro booleano que não seria utilizado, como bool notUsed,
+// e utilizar o nome Delete.
